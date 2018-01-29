@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -85,17 +85,31 @@
       
         <p>下午在刷codewars的时候，有道题要求手写一个数组的reverse方法，长度在30bytes以内，后来实在想不出来，就乖乖去看答案了。</p>
 <p>答案如下</p>
-<p>reverse = a =&gt; a.map(a.pop, […a])<br>看到答案之后完全想不明白，花了点时间终于搞懂了。</p>
+<pre><code>reverse = a =&gt; a.map(a.pop, [...a])
+</code></pre><p>看到答案之后完全想不明白，花了点时间终于搞懂了。</p>
 <p>一开始我尝试着把代码改长去理解</p>
-<p>reverse = a =&gt; a.map(function () {<br>  return a.pop()<br>}, […a])<br>a= [1,2,3]<br>console.log(reverse(a)) // [3, 2,  ]<br>console.log(a) // [1]<br>发现结果并不如自己想象的那样，而且数组a的元素也发生了变化，这明显不是我们想要的，这自然是a.pop()的原因。然而，让我不解的是在答案中一样调用了a.pop()，为什么答案中的数组a的元素不会发生变化。后来，我把代码改成了下面，出现了同样的问题</p>
-<p>reverse = a =&gt; a.map(a.pop, a)<br>最后，我在MDN上找到了答案。</p>
-<p>let new_array = arr.map(function callback(currentValue, index, array) {<br>    // Return element for new_array<br>}, [thisArg])<br>如果 thisArg 参数有值，则每次 callback 函数被调用的时候，this 都会指向 thisArg 参数上的这个对象。如果省略了 thisArg 参数,或者赋值为 null 或 undefined，则 this 指向全局对象 。<br>在以下这段代码中,a.map里面的this指向一个新的数组[…a]，不是原来的数组a。与此同时a.pop的a为新的数组[…a]，在函数a.pop()执行的时候，实际上是执行this.pop()，即[…a].pop()。</p>
-<p>reverse = a =&gt; a.map(a.pop, […a])</p>
-
+<pre><code>reverse = a =&gt; a.map(function () {
+  return a.pop()
+}, [...a])
+a= [1,2,3]
+console.log(reverse(a)) // [3, 2,  ]
+console.log(a) // [1]
+</code></pre><p>发现结果并不如自己想象的那样，而且数组a的元素也发生了变化，这明显不是我们想要的，这自然是a.pop()的原因。然而，让我不解的是在答案中一样调用了a.pop()，为什么答案中的数组a的元素不会发生变化。后来，我把代码改成了下面，出现了同样的问题</p>
+<pre><code>reverse = a =&gt; a.map(a.pop, a)
+</code></pre><p>最后，我在MDN上找到了答案。</p>
+<pre><code>let new_array = arr.map(function callback(currentValue, index, array) { 
+    // Return element for new_array 
+}, [thisArg]) 
+</code></pre><blockquote>
+<p>如果 thisArg 参数有值，则每次 callback 函数被调用的时候，this 都会指向 thisArg 参数上的这个对象。如果省略了thisArg 参数,或者赋值为 null 或 undefined，则 this 指向全局对象 。</p>
+</blockquote>
+<p>在以下这段代码中,a.map里面的this指向一个新的数组[…a]，不是原来的数组a。与此同时a.pop的a为新的数组[…a]，在函数a.pop()执行的时候，实际上是执行this.pop()，即[…a].pop()。</p>
+<pre><code>reverse = a =&gt; a.map(a.pop, [...a])
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/JS-关于map运用中遇到的一些问题/" data-id="cjd0aclie0000m4o0fwhji4df" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/29/JS-关于map运用中遇到的一些问题/" data-id="cjd0alp2a0000z8o08ip4leuy" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -140,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/hello-world/" data-id="cjd0aclim0001m4o0qbl9re47" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/29/hello-world/" data-id="cjd0alp2k0001z8o0bs9ya53x" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -166,7 +180,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
     </div>
@@ -176,7 +190,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
