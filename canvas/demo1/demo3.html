@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+	<div id='app'>
+		<!-- <span>Multiline message is:</span>
+		<p style="white-space: pre-line;">{{ message }}</p>
+		<br>
+		<textarea v-model="message" placeholder="add multiple lines"></textarea>
+		<demo post-title='hehe'></demo> -->
+		<base-input v-model="username" class="username-input" placeholder="Enter your username"></base-input>
+	</div>
+
+	<script type="text/javascript" charset="utf-8" async defer>
+       
+       Vue.component('demo',{
+       	    inheritAttrs:false,
+	       	data:function() {
+		       	return {
+		          data:'hehe'
+		       	}
+	        },
+	        template:'<h3>{{data}}</h3>'
+       })
+       
+       Vue.component('base-input',{
+       	 inheritAttrs:false,
+       	 props:{
+       	 	label:String,
+       	 	value:String
+       	 },
+       	 template: `<label>{{label}}
+            <input  
+               v-bind='$attrs'
+               :value="value"
+               @input="$emit('input',$event.target.value)"    
+            />
+       	 </label>`
+       })
+
+		new Vue({
+			el:'#app',
+            data: {
+            	message: '',
+            	username:''
+            }
+		})
+</script>
+</body>
+
+</html>
