@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	html, body {
+		height: 100%;
+		width: 100%;
+		background: rgb(43, 29, 92);
+	}
+</style>
+<body>
+	<!-- <canvas id="canvas"></canvas> -->
+	<script>
+    var myCanvas = document.createElement("canvas");
+    myCanvas.setAttribute("width", window.innerWidth);
+    myCanvas.setAttribute("height", window.innerHeight);
+    myCanvas.setAttribute("id", "canvas");
+    document.body.appendChild(myCanvas);
+		class Element {
+      constructor(x, y) {
+        this.x = x
+        this.y = y
+        this.r = 2
+        this._mx = (Math.random() * 5 + 2)
+        this._my = (Math.random() * 5 + 2)
+      }
+    }
+    class Particle extends Element {
+        constructor(x, y) {
+          super(x, y)
+          this.r = 1.5 + (Math.random() * 1)
+        }
+        drawParticle(ctx) {
+          ctx.beginPath();
+          //注释内容为鼠标焦点的地方圆圈半径变化
+          //this.r = (this.r < 14 && this.r > 1) ? this.r + (Math.random() * 2 - 1) : 2;
+          ctx.arc(this.x, this.y, this.r * this.r, 0, 360);
+          ctx.closePath();
+          //ctx.fillStyle = 'rgba(0,0,0,' + (parseInt(Math.random() * 100) / 100) + ')'
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'
+          ctx.fill();
+          // const {x, y} = this
+          // ctx.save();
+          // ctx.rotate(36 * this.angle * Math.PI / 180);
+          // ctx.beginPath()
+          // ctx.moveTo(x, y)
+          // ctx.lineTo(x, y - 14)
+          // ctx.lineTo(x + 2, y - 14)
+          // ctx.lineTo(x + 2, y - 30)
+          // ctx.lineTo(x + 3, y - 30)
+          // ctx.lineTo(x + 3, y - 36)
+          // ctx.lineTo(x + 5, y - 36)
+          // ctx.lineTo(x + 5, y - 30)
+          // ctx.lineTo(x + 6, y - 30)
+          // ctx.lineTo(x + 6, y - 14)
+          // ctx.lineTo(x + 8, y - 14)
+          // ctx.lineTo(x + 8, y)
+          // ctx.closePath()
+          // ctx.restore();
+          // // ctx.fillStyle = 'rgba(255,255,255,' + (parseInt(Math.random() * 100) / 100) + ')'
+          // ctx.fillStyle = 'white'
+          // ctx.fill();
+        }
+        move (ctx) {
+          this._mx = (this.x < w && this.x > 0) ? this._mx : (-this._mx);
+          this._my = (this.y < h && this.y > 0) ? this._my : (-this._my);
+          this.x += this._mx / 2;
+          this.y += this._my / 2;
+        }
+      }
+
+      let canvas = document.getElementById('canvas');
+      let ctx = canvas.getContext('2d');
+      let w = canvas.width = canvas.offsetWidth;
+      let h = canvas.height = canvas.offsetHeight;
+      let particles = []
+      // let particle = new Particle( 15,  10)
+      for (let i = 1; i < 400; i ++) {
+        particles.push(new Particle(Math.random() * w, Math.random() * h))
+      }
+      let draw = function () {
+        ctx.clearRect(0, 0, w, h)
+        particles.forEach((particle) => {
+          particle.move(ctx)
+          particle.drawParticle(ctx)
+        })
+        requestAnimationFrame(draw)
+      }
+      var id = requestAnimationFrame(draw)
+      document.body.addEventListener('click', function () {
+
+      })
+	</script>
+</body>
+
+</html>
